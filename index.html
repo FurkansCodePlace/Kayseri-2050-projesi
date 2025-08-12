@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YapayKoç</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* GENEL RENK PALETİ - MODERN VE GÖZ YORMAYAN */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth; /* Yumuşak kaydırma */
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 10px 30px;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav a.logo-link img {
+      height: 100px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    nav ul li a:hover {
+      background-color: #4a90e2;
+      color: white;
+    }
+
+    /* Giriş - Kayıt Bölümü Yan Yana */
+    .auth-container {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 40px 20px;
+      flex-wrap: wrap;
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px rgb(0 0 0 / 0.05);
+      border-radius: 12px;
+      max-width: 960px;
+      margin: 40px auto;
+    }
+    .auth-section {
+      background-color: #f9fbfd;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      width: 320px;
+      transition: box-shadow 0.3s ease;
+    }
+    .auth-section:hover {
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+    }
+    .auth-section h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #2c3e50;
+      font-weight: 700;
+    }
+    .auth-section form {
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-section input, 
+    .auth-section button {
+      margin-bottom: 15px;
+      padding: 12px 15px;
+      border: 1.5px solid #ccd6dd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+    .auth-section input:focus {
+      outline: none;
+      border-color: #4a90e2;
+      background-color: #e8f0fe;
+    }
+    .auth-section button {
+      background-color: #4a90e2;
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border-radius: 8px;
+    }
+    .auth-section button:hover {
+      background-color: #357ABD;
+    }
+
+    /* NAVBAR İÇİN YENİ LINKLER */
+    nav ul li.register-link a {
+      background-color: #27ae60;
+      color: white;
+      font-weight: 700;
+    }
+    nav ul li.register-link a:hover {
+      background-color: #1e8449;
+    }
+    nav ul li.login-link a {
+      background-color: #2980b9;
+      color: white;
+      font-weight: 700;
+    }
+    nav ul li.login-link a:hover {
+      background-color: #21618c;
+    }
+
+    /* DİĞER BÖLÜMLER İÇİN DE GEREKLİ BASİT İYİLEŞTİRMELER */
+    header.hero-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 60px 30px;
+      background-color: #ffffff;
+      max-width: 1200px;
+      margin: 40px auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgb(0 0 0 / 0.08);
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+    header.hero-section h1 {
+      font-size: 2.8rem;
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+    header.hero-section p {
+      font-size: 1.2rem;
+      margin-bottom: 25px;
+      color: #555;
+    }
+    header.hero-section button {
+      background-color: #4a90e2;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    header.hero-section button:hover {
+      background-color: #357ABD;
+    }
+    header.hero-section img {
+      max-width: 400px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgb(0 0 0 / 0.07);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 12px;
+      }
+      header.hero-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .auth-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="#" class="logo-link">
+      <img src="images/logo.png" alt="Logo" />
+    </a>
+    <ul>
+      <li><a href="#">Ana Sayfa</a></li>
+      <li><a href="#hakkinda">Hakkında</a></li>
+      <li><a href="#hizmetler">Hizmetler ve Problemimiz</a></li>
+      <li><a href="#bagis">Bağış</a></li>
+      <li><a href="#sss">SSS</a></li>
+      <li><a href="#contact-section">İletişim</a></li>
+      <li class="register-link"><a href="#register-section">Kayıt Ol</a></li>
+      <li class="login-link"><a href="#login-section">Giriş Yap</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero-section">
+    <div>
+      <h1>YapayKoç'a Hoşgeldiniz!</h1>
+      <p>YapayKoç size yardımcı olmak için burada!</p>
+      <button onclick="location.href='#register-section'">Hemen Başla</button>
+    </div>
+    <div>
+      <img src="images/hero.png" alt="Hero Görseli" />
+    </div>
+  </header>
+
+  <section class="about-us" id="hakkinda">
+    <div class="about-container">
+      <div class="circular-image">
+        <img src="images/logo.png" alt="Hakkında Görseli" />
+      </div>
+      <div class="about-text">
+        <h2>Hakkında</h2>
+        <p>
+          Biz durumu olmayan öğrenciler başta olmak üzere bütün öğrenciler için YapayKoç'umuz ile nitelikli eğitimi eşit hale getirmek için hizmetinizdeyiz!
+        </p>
+        <p>Programını hazırla, düzenle, tavsiye al! Tabii ki YapayKoç ile!</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="hizmetler">
+    <h2>Peki Hizmetlerimiz? Ve Projenin üzerine kurulu olduğu sorun.</h2>
+    <p>Projemiz Dünyadaki yetersiz ve adaletsiz eğitim imkanları ve eğitim anlamındaki fahiş ücretlere çözüm olarak kurulmuştur.Bu probleme karşın sürdürme kalkınma amaçlarına bağlı olarak oluşturduğumuz size sunduğumuz bazı harika hizmetler: Yapay Zeka ile Tam destek, Programını Hazırla ve Düzenle, Tavsiye ve motivasyon ile başarıya ulaş</p>
+    <div class="grid-container">
+      <div class="feature-item">
+        <img src="images/ai.png" alt="Yapay Zeka ile Tam destek" />
+      </div>
+      <div class="feature-item">
+        <img src="images/program.jpg" alt="Programını Hazırla ve Düzenle" />
+      </div>
+      <div class="feature-item">
+        <img src="images/motivasyon.gif" alt="Tavsiye ve motivasyon ile başarıya ulaş" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-1">
+    <img src="images/logo.png" alt="Örnek Resim 1" />
+    <div class="text-container">
+      <h2>Çözümlerimiz</h2>
+      <p>Dünyadaki adaletsiz ve sınırlı imkana sahip eğitim modelinin içinde bulunan öğrenciler için kurulan şirketimiz,sürdürülebilir kalkınma amaçlarına bağlı kalarak, tabii ki yolunda ilerlediği çözüm idealleri var. İşte bazıları!</p>
+    </div>
+  </section>
+
+  <section class="section-2">
+    <div class="text-container">
+      <h2>Çözümlerimiz</h2>
+      <p>Çözümlerimiz çoğunlukla Yapay Zeka temellidir. Birçok alanda uzman olan Yapay Zekayı eğitime entegre ederek yukarıda bahsettiğimiz sorunlar üzerine kurulu ideallerimizi gerçekleştiriyoruz!</p>
+    </div>
+    <img src="images/ai2.png" alt="Örnek Resim 2" />
+  </section>
+
+  <section class="team-section">
+    <h2>Takımımız</h2>
+    <h3>Profesyonel ve deneyimli ekibimizle tanışın</h3>
+    <div class="profile-grid">
+      <div><img src="images/kişi1.jpg" alt="Profil 1" /></div>
+      <div><img src="images/kişi2.jpg" alt="Profil 2" /></div>
+      <div><img src="images/kişi3.jpg" alt="Profil 3" /></div>
+      <div><img src="images/kişi4.jpg" alt="Profil 4" /></div>
+      <div><img src="images/kişi5.jpg" alt="Profil 5" /></div>
+      <div><img src="images/ben.png" alt="Profil 6" /></div>
+    </div>
+  </section>
+
+  <section class="pricing-section" id="bagis">
+    <h2>Bağış Planları</h2>
+    <h3>Desteklerinizle daha çok öğrenciye ulaşabiliriz.Bağış sağlamak için iletişime geçmeniz yeterli! NOT:Yanda yazan fiyatlar önerilen bağış miktarlarıdır kesinliği yoktur!!!</h3>
+    <div class="card-container">
+      <div class="pricing-card">
+        <h2>Eğitim Desteği (200 tl)</h2>
+        <ul>
+          <li>Temel kırtasiye ihtiyaçlarının karşılanması</li>
+          <li>Darüşşafaka, TEGV gibi vakıflara destek</li>
+          <li>İhtiyaç sahibi öğrencilere ulaşım desteği</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <h2>Teknoloji Desteği (1500 tl)</h2>
+        <ul>
+          <li>Bilgisayar ve tablet temini</li>
+          <li>İnternet erişimi olmayan öğrencilere altyapı desteği</li>
+          <li>Türk Eğitim Vakfı iş birliği</li>
+        </ul>
+      </div>
+      <div class="pricing-card">
+        <h2>Burs ve Mentorluk (3000tl)</h2>
+        <ul>
+          <li>Üniversite öğrencilerine burs sağlama</li>
+          <li>Mentorluk programları ile kariyer rehberliği</li>
+          <li>Çağdaş Yaşamı Destekleme Derneği ile ortak projeler</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section" id="sss">
+    <h2>Sıkça Sorulan Sorular</h2>
+    <h3>Merak ettiklerinizin cevapları</h3>
+    <div class="faq-container">
+      <div class="faq-item">
+        <h3>Bağışlar ne için kullanılıyor?</h3>
+        <p>Toplanan bağışlar, Darüşşafaka gibi vakıflara eğitim desteği sağlamak ve dezavantajlı öğrencilere kaynak sunmak için kullanılır.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Gönüllü olarak nasıl destek olabilirim?</h3>
+        <p>Platformumuza üye olduktan sonra gönüllü başvuru formunu doldurabilirsiniz.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Hizmetleriniz ücretsiz mi?</h3>
+        <p>Evet, temel hizmetlerimiz ücretsizdir. Bağışlar tamamen isteğe bağlıdır.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Giriş & Kayıt Alanı (Yeni Konum) -->
+  <div class="auth-container" id="auth-container">
+    <section id="register-section" class="auth-section">
+      <h2>Kayıt Ol</h2>
+      <form>
+        <input type="text" placeholder="Kullanıcı Adı" required />
+        <input type="email" placeholder="E-posta" required />
+        <input type="password" placeholder="Şifre" required />
+        <button type="submit">Kayıt Ol</button>
+      </form>
+    </section>
+
+    <section id="login-section" class="auth-section">
+      <h2>Giriş Yap</h2>
+      <form>
+        <input type="text" placeholder="Kullanıcı Adı" required />
+        <input type="password" placeholder="Şifre" required />
+        <button type="submit">Giriş Yap</button>
+      </form>
+    </section>
+  </div>
+
+  <section class="contact-section" id="contact-section">
+    <div class="contact-container">
+      <div class="contact-text">
+        <h3>Bizimle İletişime Geçin</h3>
+        <p>Her türlü soru ve öneriniz için bizimle iletişime geçebilirsiniz.</p>
+        <p><strong>Adres:</strong> Ankara, Türkiye</p>
+        <p><strong>Telefon:</strong> <a href="tel:+905551234567">+90 555 123 45 67</a></p>
+        <p><strong>E-posta:</strong> <a href="mailto:info@yapaykoc.com">info@yapaykoc.com</a></p>
+        <p><strong>Sosyal Medya:</strong></p>
+        <ul class="social-links">
+          <li><a href="https://twitter.com/yapaykoc" target="_blank">Twitter</a></li>
+          <li><a href="https://instagram.com/yapaykoc" target="_blank">Instagram</a></li>
+          <li><a href="https://youtube.com/yapaykoc" target="_blank">YouTube</a></li>
+        </ul>
+      </div>
+      <div class="contact-map">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3066.132993311445!2d32.85420891519444!3d39.93336507942179!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d348b5f3e5a2db%3A0x1c59f7f5d4a95ad2!2sAnkara!5e0!3m2!1str!2str!4v1691832587961!5m2!1str!2str"
+          width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+      </div>
+    </div>
+  </section>
+  <footer style="text-align:center; padding:10px; font-size:12px; color:#666; margin-top:40px;">
+  © 2025 YapayKoç. Lisans: MIT Lisansı
+</footer>
+
+</body>
+</html>
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>YapayKoç - AI Asistan</title>
+<style>
+  /* Buton */
+  #chatbot-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #fdcb6e;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(253,203,110,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #2d3436;
+    transition: background-color 0.3s;
+    z-index: 1000;
+  }
+  #chatbot-btn:hover {
+    background-color: #e1b33f;
+  }
+
+  /* Chatbox */
+  #chatbox {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 320px;
+    max-height: 420px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    z-index: 1000;
+  }
+
+  #chatbox header {
+    background-color: #fdcb6e;
+    padding: 15px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #2d3436;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  #chatbox header button {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #2d3436;
+  }
+
+  #chatbox .messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f7f9fa;
+  }
+
+  #chatbox .input-area {
+    display: flex;
+    border-top: 1px solid #ddd;
+  }
+  #chatbox input[type="text"] {
+    flex-grow: 1;
+    border: none;
+    padding: 12px 15px;
+    font-size: 1rem;
+  }
+  #chatbox input[type="text"]:focus {
+    outline: none;
+  }
+  #chatbox button.send-btn {
+    background-color: #fdcb6e;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    font-weight: 700;
+    color: #2d3436;
+    transition: background-color 0.3s;
+  }
+  #chatbox button.send-btn:hover {
+    background-color: #e1b33f;
+  }
+
+  /* Mesaj stilleri */
+  .message {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 75%;
+    clear: both;
+    font-size: 0.9rem;
+  }
+  .message.user {
+    background-color: #fdcb6e;
+    color: #2d3436;
+    float: right;
+    text-align: right;
+  }
+  .message.bot {
+    background-color: #dfe6e9;
+    color: #2d3436;
+    float: left;
+    text-align: left;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Chatbot Butonu -->
+<button id="chatbot-btn" title="Yapay Zeka Asistanı">💬</button>
+
+<!-- Chatbox -->
+<div id="chatbox" role="dialog" aria-label="Yapay Zeka Asistanı">
+  <header>
+    Yapay Zeka Asistanı
+    <button id="close-chat">✖</button>
+  </header>
+  <div class="messages" id="messages"></div>
+  <form id="chat-form" class="input-area">
+    <input type="text" id="user-input" placeholder="Bir şeyler sor..." autocomplete="off" required />
+    <button type="submit" class="send-btn">Gönder</button>
+  </form>
+</div>
+
+<script>
+  const chatbotBtn = document.getElementById('chatbot-btn');
+  const chatbox = document.getElementById('chatbox');
+  const closeBtn = document.getElementById('close-chat');
+  const chatForm = document.getElementById('chat-form');
+  const messages = document.getElementById('messages');
+  const userInput = document.getElementById('user-input');
+
+  chatbotBtn.addEventListener('click', () => {
+    chatbox.style.display = 'flex';
+    chatbotBtn.style.display = 'none';
+    userInput.focus();
+  });
+
+  closeBtn.addEventListener('click', () => {
+    chatbox.style.display = 'none';
+    chatbotBtn.style.display = 'flex';
+  });
+
+  chatForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const userText = userInput.value.trim();
+    if (!userText) return;
+
+    // Kullanıcı mesajını ekle
+    const userMsg = document.createElement('div');
+    userMsg.classList.add('message', 'user');
+    userMsg.textContent = userText;
+    messages.appendChild(userMsg);
+
+    userInput.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    // Basit bot cevabı (demo için)
+    setTimeout(() => {
+      const botMsg = document.createElement('div');
+      botMsg.classList.add('message', 'bot');
+      botMsg.textContent = "Şu anda gerçek AI entegrasyonu yok, ama yakında olur! 🤖";
+      messages.appendChild(botMsg);
+      messages.scrollTop = messages.scrollHeight;
+    }, 1000);
+  });
+</script>
+
+</body>
+</html>
